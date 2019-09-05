@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- ブートストラップ用 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- font awesome用 -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <title>Pyoneer</title>
+</head>
+<style>
+.sidebar{
+  top:100px;
+  position: -webkit-sticky;
+  position: sticky;
+  
+}
+.arrow_btn {
+	display: inline-block;
+	position: relative;
+	width: 50%;
+    margin:10px;
+    padding:5px;
+	text-align: center;
+	text-decoration: none;
+	color: #1B1B1B;
+	background: white;
+	border-radius: 30px;
+	border:1px solid #1B1B1B;
+	transition: transform ease .3s;
+}
+.arrow_btn:hover {
+	 cursor: pointer;
+	 text-decoration: none;
+     background: rgb(141, 198, 245);
+     /* border:1px solid black; */
+     color: white;
+}
+footer{
+    margin-top:auto;
+}
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+</style>
+<body>
+<div class="wrapper">
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white">
+        <div class="container">
+            <a href="/home" class="navbar-brand">Pyoneer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+
+<div class="container">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="sidebar">
+              <p><a href="/home">ホーム</a></p>
+              <p><a href="/mypage">マイページ</a></p>
+              <p><a href="/board">掲示板</a></p>
+              <p><a href="/chat">チャット</a></p>
+              <p><a href="/logout">ログアウト</a></p>
+            </div>
+          </div>   
+          <div class="col-sm-6">
+              <div style="margin:100px 0px 50px 0px;">
+                <p>何かお気付きの点等ございましたら以下までお問い合わせください。</p>
+              </div>
+              <div style="margin:50px 0px 50px 0px;">
+                <p style="font-weight: bold;"><big>住所</big></p>
+                <p>〒***-****</p>
+                <p>東京都************</p>
+              </div>
+              <div style="margin:100px 0px 50px 0px;">
+                <p style="font-weight: bold;"><big>お問い合わせ先</big></p>
+                <p>電話番号： ***-****-****</p>
+                <p>メールアドレス： ************@***.com</p>
+            </div>
+
+          </div>
+        </div>
+</div>
+
+
+<footer class="py-4 bg-dark text-light">
+    <div class="container text-center">
+        <ul class="nav justify-content-center mb-3">
+            <li class="nav-item">
+                <a href="/terms" class="nav-link">利用規約</a>
+            </li>
+            <li class="nav-item">
+                <a href="/contact" class="nav-link">お問い合わせ</a>
+            </li>
+            <li class="nav-item">
+                <a href="/withdraw" class="nav-link">退会手続き</a>
+            </li>
+        </ul>
+        <p><small>Copyright &copy;2019 Pyoneer.All Rights Reserved.</small></p>
+    </div>
+</footer>
+
+</div>
+</body>
+</html>

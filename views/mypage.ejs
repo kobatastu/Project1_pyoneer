@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <!-- ブートストラップ用 -->
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+     <!-- font awesome用 -->
+     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+    <title>Pyoneer</title>
+</head>
+<style>
+.user {
+    width: 50px;
+    height: 50px;
+    margin: 5px 20px 5px 0px;
+    border-radius: 50%;
+    object-fit: cover;
+   
+}
+.boxclass {
+    border: 1px rgb(211, 208, 208) solid;
+    padding:20px;
+    margin: 20px;
+    background-color:white;
+    border-radius: 5px;
+}
+.sidebar{
+  top:100px;
+  position: -webkit-sticky;
+  position: sticky;
+}
+.arrow_btn {
+	display: inline-block;
+	position: relative;
+	width: 50%;
+    margin:10px;
+    padding:5px;
+	text-align: center;
+	text-decoration: none;
+	color: #1B1B1B;
+	background: white;
+	border-radius: 30px;
+	border:1px solid #1B1B1B;
+	transition: transform ease .3s;
+}
+.arrow_btn:hover {
+	 cursor: pointer;
+	 text-decoration: none;
+     background: rgb(141, 198, 245);
+     border:1px solid black;
+     color: white;
+}
+
+/* ロードマップのためのCSS */
+
+.timeline-wrapper {
+padding:10px 60px 30px 0px;
+min-width: 400px;
+font-family: 'Helvetica';
+font-size: 14px;
+/*border: 1px solid #CCC;*/
+}
+.StepProgress {
+position: relative;
+padding-left: 45px;
+list-style: none;
+}
+.StepProgress::before {
+display: inline-block;
+content: '';
+position: absolute;
+top: 0;
+left: 15px;
+width: 10px;
+height: 100%;
+border-left: 2px solid #CCC;
+}
+.StepProgress-item {
+position: relative;
+counter-increment: list;
+}
+.StepProgress-item:not(:last-child) {
+padding-bottom: 20px;
+}
+.StepProgress-item::before {
+display: inline-block;
+content: '';
+position: absolute;
+left: -30px;
+height: 100%;
+width: 10px;
+}
+.StepProgress-item::after {
+content: '';
+display: inline-block;
+position: absolute;
+top: 3px;
+left: -35px;
+width: 12px;
+height: 12px;
+border: 2px solid #CCC;
+border-radius: 50%;
+background-color: #FFF;
+}
+.StepProgress-item.is-done::before {
+border-left: 2px solid green;
+}
+.StepProgress-item.is-done::after {
+font-size: 10px;
+color: #FFF;
+text-align: center;
+border: 2px solid green;
+background-color: green;
+}
+
+.StepProgress strong {
+display: block;
+}
+/* ロードマップのCSS終わり */
+
+.tag_btn{
+    border-bottom:4px grey solid;
+    padding:10px 0px 10px 0px;
+    margin:20px 5px 20px 0px;
+    font-weight: bold;
+    cursor:pointer;
+}
+.tag_btn:hover{
+    border-bottom:4px black solid;
+    padding:10px 0px 15px 0px;
+    margin:20px 5px 20px 0px;
+    font-weight: bold;
+}
+
+</style>
+<body>
+
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white">
+        <div class="container">
+            <a href="home" class="navbar-brand">Pyoneer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+<div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="sidebar">
+                    <p><a href="/home">ホーム</a></p>
+                    <p><a href="/board">掲示板</a></p>
+                    <p><a href="/chat">チャット</a></p>
+                    <p><a href="/logout">ログアウト</a></p>
+                </div>
+            </div>
+    
+            <div class="col-sm-6">
+
+<div>
+    <p><img style="width:100%;height:200px;object-fit:cover;position:relative;"src="./img/upload_backgroundpic/<%= backgroundpic %>" alt=""></p>
+    <p><img style="width:150px;height:150px;border-radius: 50%;position:absolute;top:100px;left:30px;border:3px solid white;object-fit: cover;" src="./img/upload_icon/<%= icon %>" alt=""></p>
+    <p style='font-weight: bold;text-align:right;margin-bottom:50px;'><big><%= name %></big></p>
+</div>
+
+<div style='margin:40px 0px;'>
+    <a class="tag_btn" id='profajax'><big>Profile</big></a>
+    <a class="tag_btn" id='loadajax'><big>Road Map</big></a>
+    <a class="tag_btn" id='matchajax'><big>Matching</big></a>
+    <a class="tag_btn" id='statusajax'><big>Status</big></a>
+</div>
+
+<div id='box'>
+
+    <div>
+        <p style="font-weight:bold"><big>My Profile</big></p>
+        <p style='border-top:1px solid grey;padding-top:10px;font-weight: bold'>Profile</p>
+        <p><%= profile %></p>
+        <p style='border-top:1px solid grey;padding-top:10px;font-weight: bold'>Experience</p>
+        <p><%= experience %></p>
+        <p style='border-top:1px solid grey;padding-top:10px;font-weight: bold'>Previous Company</p>
+        <p><%= fromcompany %></p>
+        <p style='border-top:1px solid grey;padding-top:10px;font-weight: bold'>Current Company</p>
+        <p><%= tocompany %></p>
+    </div>
+
+
+    <p style='border-top:1px solid grey;padding-top:30px;font-weight: bold'><big>My Profile Update Form</big></p>
+
+
+<div class="boxclass">
+    
+    <form action="/mypage" method="post" enctype="multipart/form-data" > 
+       
+        <div class="form-group">
+            <label>Icon</label>
+            <input style="width:100%;" type="file" name="icon" accept="image/jpeg,image/gif,image/png" >
+        </div>
+
+        <div class="form-group" >
+            <label>Background Pic</label>
+            <input style="width:100%;" type="file" name="backgroundpic" accept="image/jpeg,image/gif,image/png">
+        </div>
+
+        <div class="form-group" >
+            <label>Profile</label>
+            <input style="width:100%;" type="text" name="profile" class="form-control" value="<%= profile %>">
+        </div>
+
+        <div class="form-group" >
+            <label>Experience</label>
+            <input style="width:100%;" type="text" name="experience" class="form-control" value="<%= experience %>">
+        </div>
+
+        <div class="form-group" >
+            <label>From Company</label>
+            <input style="width:100%;" type="text" name="fromcompany" class="form-control" value="<%= fromcompany %>">
+        </div>
+
+        <div class="form-group" >
+            <label>To Company</label>
+            <input style="width:100%;" type="text" name="tocompany" class="form-control" value="<%= tocompany %>">
+        </div>
+
+        <input type="hidden" name="icon" value="<%= icon %>">
+        <input type="hidden" name="backgroundpic" value="<%= backgroundpic %>">
+
+
+        <input type="submit" value="更新">
+    </form>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- profajax -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>    
+    $(document).ready(function(){
+        $('#profajax').click(function(){
+            $.getJSON("/mypage/ajax",function(json){
+                var data = '<p style="font-weight:bold"><big>My Profile</big></p>'
+                         + '<p style="border-top:1px solid grey;padding-top:10px;font-weight: bold">Profile</p><p>'+json.profile+'</p>'
+                         + '<p style="border-top:1px solid grey;padding-top:10px;font-weight: bold">Experience</p><p>'+json.experience+'</p>'
+                         + '<p style="border-top:1px solid grey;padding-top:10px;font-weight: bold">Previous Company</p><p>'+json.fromcompany+'</p>'
+                         + '<p style="border-top:1px solid grey;padding-top:10px;font-weight: bold">Current Company</p><p>'+json.tocompany+'</p>' 
+
+                data += '<p style="border-top:1px solid grey;padding-top:30px;font-weight: bold"><big>My Profile Update Form</big></p>'
+                      + '<div class="boxclass"><form action="/mypage" method="post" enctype="multipart/form-data" >'
+                      + '<div class="form-group"><label>Icon</label><input style="width:100%;" type="file" name="icon" accept="image/jpeg,image/gif,image/png" ></div>'
+                      + '<div class="form-group" ><label>Background Pic</label><input style="width:100%;" type="file" name="backgroundpic" accept="image/jpeg,image/gif,image/png"></div>'
+                      + '<div class="form-group" ><label>Profile</label><input style="width:100%;" type="text" name="profile" class="form-control" value="<%= profile %>"></div>'
+                      + '<div class="form-group" ><label>Experience</label><input style="width:100%;" type="text" name="experience" class="form-control" value="<%= experience %>"></div>'
+                      + '<div class="form-group" ><label>From Company</label><input style="width:100%;" type="text" name="fromcompany" class="form-control" value="<%= fromcompany %>"></div>'
+                      + '<div class="form-group" ><label>To Company</label><input style="width:100%;" type="text" name="tocompany" class="form-control" value="<%= tocompany %>"></div>'
+                      + '<input type="hidden" name="icon" value="<%= icon %>"><input type="hidden" name="backgroundpic" value="<%= backgroundpic %>">'
+                      + '<input type="submit" value="更新"></form></div>'
+    
+                $('#box').html(data);
+            });
+        });
+    });
+</script>
+
+<!-- loadajax -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        $("#loadajax").click(function(){
+            $.getJSON("/loadmap",function(json){
+               
+                if (Object.keys(json).length == 0){
+                    var data = '<p>あなたはまだロードマップを作成していません</p>';
+                }else {
+                    var data = '<p style="font-weight:bold"><big>My Road Map</big></p><div class="timeline-wrapper"><ul class="StepProgress">';
+                    for(var i=0;i<Object.keys(json).length;i++){
+                        var name ='no'+i
+                        data = data + '<li class="StepProgress-item is-done"><div class="bold time">'+json[name].date+'</div><div class="bold">'+json[name].cont+'</div><div style="float:right;"><a href="/loadmap/delete?did='+json[name].id+'">削除</a></div></li>';
+                    }
+                }
+
+                data = data + '</ul></div>'
+
+                data = data
+                     + '<p style="font-weight:bold"><big>Road Map Update Form</big></p>'
+                     + '<div class="boxclass"><form action="/loadmap" method="post">'
+                     + '<div class="form-group" ><label>Action Contents</label>'
+                     + '<input style="width:100%;" type="text" name="cont" class="form-control" placeholder="行動した内容を書いてください"></div>'
+                     + '<div class="form-group" ><label>Action Date</label>'
+                     + '<input style="width:100%;" type="date" name="date" class="form-control" placeholder="行動した日を書いてください"></div>'
+                     + '<input type="submit" value="追加">'
+                     + '</form></div>'
+
+                $("#box").html(data);
+                
+            });
+        });
+    });
+</script>
+
+<!-- matchajax -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        $("#matchajax").click(function(){
+            $.getJSON("/match",function(json){
+
+                var data = '<p style="font-weight:bold"><big>あなたに興味を持っている人</big></p>'
+                if (Object.keys(json.forme).length == 0){
+                    data = data + '<p>あなたはまだフォローされていません</p>';
+                }else {
+                    for (var i=0;i<Object.keys(json.forme).length ;i++){
+                        var name ='no'+i
+                        data = data
+                            + '<div class="boxclass">'
+                            + '<img src="./img/upload_icon/'+json.forme[name].icon+'" alt="" class="user">'
+                            + '<p style="margin-top:10px;font-weight:bold;float:right;"><big>'+json.forme[name].name+'</big></p>'
+                            + '<p style="margin-top:10px;font-weight:bold;">From:'+json.forme[name].fromcompany+'</p>'
+                            + '<p style="border-top:1px solid grey;padding-top:10px;font-weight: bold">Profile</p><p style="width:100%;">'+json.forme[name].profile+'</p>'
+                                // Ajax発火ボタン
+                            + '<div style="text-align: center;border-top:1px solid grey;padding-top:10px;"><a id="btn'+json.forme[name].userid+'" class="match arrow_btn">'
+
+                                if (json.forme[name].matching==0){ 
+                                    data = data 
+                                        + 'リクエストが届いています</a></div>'
+                                }else{
+                                    data = data
+                                        + 'マッチングしました！</a></div>'
+                                }
+                        data = data
+                            + '</div>'
+
+                        // いいねをもらってる人にフォローを返すためのAjax
+                        $(document).ready(function(){
+                            $(".match").click(function(){
+                                var id = $(this).attr("id");
+                                var idval = id.slice(3);
+                                $.getJSON("/match/matching?rid="+idval,function(json){
+                                    if (json.judge == 0){
+                                        var data = 'リクエストが届いています';
+                                    }else{
+                                        var data = 'マッチングしました！';
+                                    };
+                                $("#btn"+idval).html(data);
+                                });
+                            });
+                        });
+
+
+                    }
+                }
+
+                data = data + '<p style="font-weight:bold"><big>あなたが興味を持っている人</big></p>'
+
+                if (Object.keys(json.foryou).length == 0){
+                    data = data + '<p>あなたはまだフォローしていません</p>';
+                }else {
+                    for (var i=0;i<Object.keys(json.foryou).length ;i++){
+                        var name ='no'+i
+                        data = data
+                            + '<div class="boxclass">'
+                            + '<img src="./img/upload_icon/'+json.foryou[name].icon+'" alt="" class="user">'
+                            + '<p style="margin-top:10px;font-weight:bold;float:right;"><big>'+json.foryou[name].name+'</big></p>'
+                            + '<p style="margin-top:10px;font-weight:bold;">From:'+json.foryou[name].fromcompany+'</p>'
+                            + '<p style="border-top:1px solid grey;padding-top:10px;font-weight: bold">Profile</p><p style="width:100%;">'+json.foryou[name].profile+'</p>'
+                            + '<div style="text-align: center;border-top:1px solid grey;padding-top:10px;"><a class="arrow_btn">'
+                                if (json.foryou[name].matching==0){ 
+                                    data = data 
+                                        + 'リクエストを送っています</a></div>'
+                                }else{
+                                    data = data
+                                        + 'マッチングしました！</a></div>'
+                                }
+                        data = data
+                            + '</div>'
+
+                    }
+                }
+                           
+                $("#box").html(data);
+            });
+        });
+    });
+</script>
+
+<!-- statusajax -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>    
+    $(document).ready(function(){
+        $('#statusajax').click(function(){
+            $.getJSON("/mypage/status",function(json){
+
+                if(json.status==1){
+                    var data = '<p>あなたのStatusは<big style="font-weight:bold;">「先人」</big>です。</p>'
+                             + '<p style="margin-bottom:400px;">後輩たちにたくさんアドバイスをし、導いてあげてください。</p>' 
+                }else{
+                    var data = '<p>あなたのStatusは<big style="font-weight:bold;">「User」</big>です。</p>'
+                             + '<p>先人達からアドバイスをもらい、自分の道を切り開きましょう！</p>'
+                             + '<div style="border-top:1px solid grey;padding:20px 0px 30px 0px;margin-top:70px;"><p>あなたが自分の納得する道を見つけ、自分のプロフィール、ロードマップを書き終えたら、今度はあなたが先人となり、後輩が進むべき道を見つけるサポートをしてあげましょう！!</p></div>'
+                             + '<div style="text-align: center;padding:10px 0px 100px 0px;"><a class="arrow_btn" id="pyoneer_btn">先人になる</a></div>'
+
+
+                            //  pyoneerbtnajax
+                             $(document).ready(function(){
+                                $('#pyoneer_btn').click(function(){
+                                    $.getJSON("/mypage/pyoneer",function(json2){
+
+                                        if(Object.keys(json2).length == 0){
+                                            var data2 = '<p>あなたのStatusは<big style="font-weight:bold;">「先人」</big>になりました。</p>'
+                                                    + '<p>自分がいた環境から新しい環境に飛び出すということは、たくさんのエネルギーが必要です。</p>'
+                                                    + '<p>本来ならそんなことしなくてもいいんです。もしかしたら周りからもそう言われていたかもしれません。</p>'
+                                                    + '<p>しかし、あなたはそんな道を選んでやりきりました。</p>'
+                                                    + '<p>そんなあなたが選んで進んだ道は一本の筋が通った道であり、あなたの自信になっているでしょう。</p>'
+                                                    + '<p>そして、あなたが今の道を選んで達成するまでにたくさんの苦労や選択があったと思います。</p>'
+                                                    + '<p>そんな経験を後輩たちにたくさん伝えてあげてください！</p>'
+                                                    + '<p style="margin-bottom:100px;">最後に、<big style="font-weight:bold;">本当にお疲れ様でした！！！</big></p>' 
+                                        }else{
+                                            
+                                            var data2 = '<p>あなたのStatusは<big style="font-weight:bold;">「User」</big>です。</p>'
+                                                    + '<p>先人達からアドバイスをもらい、自分の道を切り開きましょう！</p>'
+                                                    + '<div style="border-top:1px solid grey;padding:20px 0px 30px 0px;margin-top:70px;"><p>あなたが自分の納得する道を見つけ、自分のプロフィール、ロードマップを書き終えたら、今度はあなたが先人となり、後輩が進むべき道を見つけるサポートをしてあげましょう！!</p></div>'
+                                                    
+                                                    for(var item in json2){
+                                                        data2 = data2 + '<p style="color:red">※'+item+'が入力されていません。</p>'
+                                                    }
+
+
+                                                data2 = data2 + '<div style="text-align: center;padding:10px 0px 100px 0px;"><a class="arrow_btn" id="pyoneer_btn">先人になる</a></div>'
+                                        }
+                                        $('#box').html(data2);
+                                    });
+                                });
+                            });
+
+
+
+
+                }
+                $('#box').html(data);
+            });
+        });
+    });
+</script>
+
+
+
+<footer class="py-4 bg-dark text-light">
+    <div class="container text-center">
+        <ul class="nav justify-content-center mb-3">
+            <li class="nav-item">
+                <a href="/terms" class="nav-link">利用規約</a>
+            </li>
+            <li class="nav-item">
+                <a href="/contact" class="nav-link">お問い合わせ</a>
+            </li>
+            <li class="nav-item">
+                <a href="/withdraw" class="nav-link">退会手続き</a>
+            </li>
+        </ul>
+        <p><small>Copyright &copy;2019 Pyoneer.All Rights Reserved.</small></p>
+    </div>
+</footer>
+</body>
+</html>

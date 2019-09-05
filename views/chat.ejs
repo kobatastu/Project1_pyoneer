@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- ブートストラップ用 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Websocket用 -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://tpm.pw/socket.io/socket.io.js"></script>
+    <title>Pyoneer</title>
+</head>
+<body>
+<style>
+.user {
+    width: 50px;
+    height: 50px;
+    margin: 5px 20px 5px 0px;
+    border-radius: 50%;
+    object-fit:cover;
+
+}
+.box {
+    border: 1px rgb(211, 208, 208) solid;
+    padding:20px;
+    margin: 20px;
+    background-color:#fffaf0;
+}
+.sidebar{
+  top:100px;
+  position: -webkit-sticky;
+  position: sticky;
+}
+.myside{
+    background-color:rgb(183, 221, 183);
+    text-align:right;
+    padding:10px;
+    margin:10px;
+    border:0.1px solid grey;
+    border-radius:10px;
+    width:95%;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+       -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
+}
+.yourside{
+    background-color:rgb(190, 184, 184);
+
+    padding:10px;
+    margin:10px;
+    border:0.1px solid grey;
+    border-radius:10px;
+    width:95%;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+       -moz-box-shadow: 0 10px 6px -6px #777;
+            box-shadow: 0 10px 6px -6px #777;
+}
+
+</style>
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white">
+        <div class="container">
+            <a href="/home" class="navbar-brand">Pyoneer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+        
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="sidebar">
+                <p><a href="/home">ホーム</a></p>
+                <p><a href="/mypage">マイページ</a></p>
+                <p><a href="/board">掲示板</a></p>
+                <p><a href="/logout">ログアウト</a></p>
+            </div>
+        </div>
+    
+        <div class="col-sm-6">
+            <p style="margin:50px 0px 50px 0px;font-weight:bold"><big>マッチング相手とチャットしましょう！</big></p>
+            <% if(data.results.length==0){ %>
+                <div style="margin:150px 0px 600px 0px">
+                    <p>あなたはまだマッチングしていません。</p>
+                    <p>マッチングすると相手とチャットできるようになります。</p>
+                </div>
+            <% }else{ %>
+                
+                <p style="font-weight:bold;margin:50px 0px 20px 0px;"><big>マッチングした相手</big></p>
+
+                <div style="width:100%;overflow-x:auto;">
+            
+                <% for(var i=0;i<data.results.length ;i++){ %>
+                <div >
+                    <a style='float:left;margin-right:10px;cursor:pointer' id="me<%= data.results[i].mid %>">
+                        <img src="./img/upload_icon/<%= data.results[i].icon %>" alt="" class="user">
+                        <p style="margin-top:10px;font-weight:bold;"><%= data.results[i].name %></p>
+                    </a>
+                </div>
+
+                <!-- チャットルームのためのAjax -->
+                <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+                <script>    
+                    $(document).ready(function(){
+                        $('#me<%= data.results[i].mid %>').click(function(){
+                            $.getJSON("/chat/ajax?mid=<%= data.results[i].mid %>",function(json){
+
+                                var data = '<p style="font-weight:bold;"><big><%= data.results[i].name %></big>とのチャットルーム</p><div id="scrollbox" style="height:500px;overflow-y:auto;">';
+
+                                for(var p=0;p<Object.keys(json).length;p++){
+                                    var name ='no'+p
+                                    if(json[name].senderid=='<%= data.results[i].receiverid %>'){
+                                        data = data +'<div class="myside"><p>'+json[name].comment+'</p><p><small>'+json[name].date+'</small></p></div>';
+                                    }else{
+                                        data = data +'<div class="yourside"><p>'+json[name].comment+'</p><p><small>'+json[name].date+'</small></p></div>';
+                                    }
+                                }
+
+                                    data = data +'<div id="messages<%= data.results[i].mid %>"></div></div>'
+
+                                    data = data + '<form id="form<%= data.results[i].mid %>" style="margin:50px 0px;text-align:center;">'
+                                                + '<input id="m<%= data.results[i].mid %>" autocomplete="off" placeholder="メッセージを入力" style="width:70%;"/>'
+                                                + '<button id="<%= data.results[i].mid %>" style="width:15%;">送信</button>'
+                                                + '<input type="hidden" id="rooms<%= data.results[i].mid %>" value=<%= data.results[i].mid %>>'
+                                                + '</form>'
+
+                                $('#chatroom').html(data);
+                            });
+                        });
+                    });
+
+                    // websocket通信のための処理
+                    $(function () {
+                        //サーバーに接続
+                        var socket = io.connect("http://********:8000"); 
+
+                        console.log('ここOK？');
+
+
+                        $(document).on('submit',"#form<%= data.results[i].mid %>",function(){
+                            console.log('ここまでは来てる？')
+                        
+                        //クライアントからサーバーに部屋情報を送信(emitは送信)
+                        socket.emit('join',$('#rooms<%= data.results[i].mid %>').val());
+
+                        //サーバーに送るデータを用意
+                        var value = {'senderid':'<%= data.results[i].receiverid %>','receiverid':'<%= data.results[i].senderid %>','comment':$('#m<%= data.results[i].mid %>').val(),'status':'<%= data.status %>'}
+
+                        //クライアントからサーバーにメッセージ情報を送信(emitは送信)
+                        socket.emit('chat message',value);
+
+                        //送信フォームの中身をクリアにする
+                        $('#m<%= data.results[i].mid %>').val('');
+                        return false;
+                        });
+
+                        //サーバーからメッセージを受け取り、リストに追加(ONは受信)
+                        socket.on('chat message', function(data1){
+                            if(data1.senderid=='<%= data.results[i].receiverid %>'){
+                                $('#messages<%= data.results[i].mid %>').append(                    
+                                    '<div class="myside"><p>'+data1.comment+'</p><p><small>'+data1.date+'</small></p></div>'
+                                );
+                            }else{
+                                $('#messages<%= data.results[i].mid %>').append(                    
+                                    '<div class="yourside"><p>'+data1.comment+'</p><p><small>'+data1.date+'</small></p></div>'
+                                );
+                            }
+                            var obj = document.getElementById("scrollbox");
+                            obj.scrollTop = obj.scrollHeight;
+                        });
+                    });
+                </script>
+
+                <% } %>
+
+                </div>
+
+                <p style="font-weight:bold;clear:left;margin:30px 0px;"><big>チャットルーム</big></p>
+
+                <div id='chatroom' >
+                    <p style="margin:50px 0px 500px 0px">マッチングした相手のアイコンをクリックしチャットを始めよう</p>
+                </div>
+
+
+            <%}%>
+
+
+</div>
+</div>
+</div>
+
+<footer class="py-4 bg-dark text-light">
+    <div class="container text-center">
+        <ul class="nav justify-content-center mb-3">
+            <li class="nav-item">
+                <a href="/terms" class="nav-link">利用規約</a>
+            </li>
+            <li class="nav-item">
+                <a href="/contact" class="nav-link">お問い合わせ</a>
+            </li>
+            <li class="nav-item">
+                <a href="/withdraw" class="nav-link">退会手続き</a>
+            </li>
+        </ul>
+        <p><small>Copyright &copy;2019 Pyoneer.All Rights Reserved.</small></p>
+    </div>
+</footer>
+
+    
+</body>
+</html>

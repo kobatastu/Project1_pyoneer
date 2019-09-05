@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- ブートストラップ用 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- font awesome用 -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+    <title>Pyoneer</title>
+</head>
+<style>
+
+.user {
+    width: 75px;
+    height:75px;
+    margin: 5px 20px 5px 0px;
+    border-radius: 50%;
+    object-fit: cover;
+   
+}
+.box {
+    border: 1px rgb(211, 208, 208) solid;
+    padding:20px;
+    margin: 20px;
+    background-color:white;
+    border-radius: 5%;
+}
+.sidebar{
+  top:100px;
+  position: -webkit-sticky;
+  position: sticky;
+}
+.arrow_btn {
+	display: inline-block;
+	position: relative;
+	width: 50%;
+    margin:10px;
+    padding:5px;
+	text-align: center;
+	text-decoration: none;
+	color: #1B1B1B;
+	background: white;
+	border-radius: 30px;
+	border:1px solid #1B1B1B;
+	transition: transform ease .3s;
+}
+.arrow_btn:hover {
+	 cursor: pointer;
+	 text-decoration: none;
+     background: rgb(141, 198, 245);
+     border:1px solid black;
+     color: white;
+}
+
+/* ロードマップのためのCSS */
+
+.timeline-wrapper {
+padding:10px 60px 30px 0px;
+min-width: 400px;
+font-family: 'Helvetica';
+font-size: 14px;
+/*border: 1px solid #CCC;*/
+}
+.StepProgress {
+position: relative;
+padding-left: 45px;
+list-style: none;
+}
+.StepProgress::before {
+display: inline-block;
+content: '';
+position: absolute;
+top: 0;
+left: 15px;
+width: 10px;
+height: 100%;
+border-left: 2px solid #CCC;
+}
+.StepProgress-item {
+position: relative;
+counter-increment: list;
+}
+.StepProgress-item:not(:last-child) {
+padding-bottom: 20px;
+}
+.StepProgress-item::before {
+display: inline-block;
+content: '';
+position: absolute;
+left: -30px;
+height: 100%;
+width: 10px;
+}
+.StepProgress-item::after {
+content: '';
+display: inline-block;
+position: absolute;
+top: 3px;
+left: -35px;
+width: 12px;
+height: 12px;
+border: 2px solid #CCC;
+border-radius: 50%;
+background-color: #FFF;
+}
+.StepProgress-item.is-done::before {
+border-left: 2px solid green;
+}
+.StepProgress-item.is-done::after {
+font-size: 10px;
+color: #FFF;
+text-align: center;
+border: 2px solid green;
+background-color: green;
+}
+
+.StepProgress strong {
+display: block;
+}
+/* ロードマップのCSS終わり */
+
+
+
+</style>
+<body>
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white">
+        <div class="container">
+            <a href="" class="navbar-brand">Pyoneer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+<div class="container">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="sidebar">
+              <p><a href="/mypage">マイページ</a></p>
+              <p><a href="/board">掲示板</a></p>
+              <p><a href="/chat">チャット</a></p>
+              <% if(kanri == 1){ %>
+              <p><a href="/kanri">管理画面</a></p>
+              <% } %>
+              <p><a href="/logout">ログアウト</a></p>
+              <p>
+                <form action='/home' method='post'>
+                    <input type="text" name='search' placeholder="キーワードを検索" size=20>
+                    <input type="submit" value="検索">
+                </form>
+              </p>
+            </div>
+        </div>
+    
+
+
+
+<!-- 全先人取得のためforで回しておく -->
+<div class="col-sm-6">
+
+<p style="margin:50px 0px 50px 0px;font-weight:bold"><big>気になる先人とマッチングし、アドバイスをもらいましょう！</big></p>
+
+<% for (var i=0;i<results.length ;i++){ %>
+    <div class="box">
+        <img src="./img/upload_icon/<%= results[i].icon %>" alt="" class="user">
+        <p style="margin-top:10px;font-weight:bold;float:right;"><big><%= results[i].name %></big></p>
+        <p style="margin-top:10px;font-weight:bold;">From:<%= results[i].fromcompany %> To:<%= results[i].tocompany %></p>
+        <p style='border-top:1px solid grey;padding-top:10px;font-weight: bold'>Profile</p>
+        <p style="width:100%;"><%= results[i].profile %></p>
+        <p style='border-top:1px solid grey;padding-top:10px;font-weight: bold'>Experience</p>
+        <p style="width:100%;"><%= results[i].experience %></p>
+
+ 
+
+        <!-- ロードマップAjax発火ボタン -->
+
+        <div style='text-align: center;border-top:1px solid grey;padding:10px 0px;'>
+            <a class="arrow_btn" style="font-weight: bold" id="btn2<%=results[i].userid%>">ロードマップを見る</a>
+            <div id="box<%=results[i].userid%>" style='text-align: left;'></div>
+        </div>
+
+
+
+        <!-- いいねAjax発火ボタン -->
+        <div style='text-align: center;border-top:1px solid grey;padding-top:10px;'>
+            <a id="btn<%=results[i].userid%>" class="arrow_btn" style="font-weight: bold">
+                <% if (results[i].senderid==null){ %>
+                    話を聞いてみたい！
+                <% }else if(results[i].matching==0){ %>
+                    リクエストを送信しました
+                <% }else{ %>
+                    マッチングしました！
+                <% } %>
+            </a>
+        </div>
+
+    </div>
+
+
+<!-- いいねAjax -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>        
+    $(document).ready(function(){
+        $('#btn<%=results[i].userid%>').click(function(){
+            $.getJSON("/good?rid=<%=results[i].userid%>",function(json){
+                if (json.judge == 0){
+                    var data = '話を聞いてみたい！';
+                }else if(json.judge ==1){
+                    var data = 'リクエストを送信しました';
+                }else{
+                    var data = 'マッチングしました！';
+                };
+                $('#btn<%=results[i].userid%>').html(data);
+            });
+        });
+    });
+</script>
+
+
+
+
+<!-- ロードマップAjax -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>        
+    $(document).ready(function(){
+        $('#btn2<%=results[i].userid%>').click(function(){
+            if($('#box<%=results[i].userid%>').html()==''){
+                $.getJSON("/home/load?rid=<%=results[i].userid%>",function(json){
+                    if (Object.keys(json).length == 0){
+                        var data = '<p>ロードマップがありません</p>';
+                    }else {
+                        var data = '<div class="timeline-wrapper"><ul class="StepProgress">';
+                        for(var i=0;i<Object.keys(json).length;i++){
+                            var name ='no'+i
+                            data = data + '<li class="StepProgress-item is-done"><div class="bold time">'+json[name].date+'</div><div class="bold">'+json[name].cont+'</div></li>';
+                        }
+                        data = data + '</ul></div>'
+                    }
+                    $('#box<%=results[i].userid%>').html(data);
+                    $('#btn2<%=results[i].userid%>').html('ロードマップを閉じる');
+                });
+            }else{
+                $('#box<%=results[i].userid%>').html('');
+                $('#btn2<%=results[i].userid%>').html('ロードマップを見る');
+            }
+        });
+    });
+</script>
+
+
+
+<% } %>
+</div>
+</div>
+</div> 
+
+
+<footer class="py-4 bg-dark text-light">
+    <div class="container text-center">
+        <ul class="nav justify-content-center mb-3">
+            <li class="nav-item">
+                <a href="/terms" class="nav-link">利用規約</a>
+            </li>
+            <li class="nav-item">
+                <a href="/contact" class="nav-link">お問い合わせ</a>
+            </li>
+            <li class="nav-item">
+                <a href="/withdraw" class="nav-link">退会手続き</a>
+            </li>
+        </ul>
+        <p><small>Copyright &copy;2019 Pyoneer.All Rights Reserved.</small></p>
+    </div>
+</footer>
+
+    
+</body>
+</html>

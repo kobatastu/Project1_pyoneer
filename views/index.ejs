@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" href="./style.css" type="text/css"> -->
+
+    <!-- ブートストラップ用 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- font awesome用 -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+    <title>Pyoneer</title>
+</head>
+<style>
+
+h1 {
+    font-size:100pt;
+    margin:20% 0% 5% 0%;
+    
+}
+.container{
+    text-align: center;
+    vertical-align: middle;
+    height:100%;
+    
+}
+
+
+.arrow_btn {
+	display: inline-block;
+	position: relative;
+	width: 200px;
+	padding: 0.8em;
+	text-align: center;
+	text-decoration: none;
+	color: #1B1B1B;
+	background: #fff;
+	border-radius: 30px;
+	border:1px solid #1B1B1B;
+	transition: transform ease .3s;
+}
+.arrow_btn:hover {
+	 cursor: pointer;
+	 text-decoration: none;
+}
+.arrow_btn span {
+	display: inline-block;
+	text-decoration: none;	
+	transition: transform ease .3s;
+}
+.arrow_btn:hover span{
+	cursor: pointer;
+	text-decoration: none;
+	transform: translateX(6px);
+}
+</style>
+
+<body >
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white">
+        <div class="container">
+            <a href="" class="navbar-brand">Pyoneer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+<div class="contents">
+    <div class="container">
+        <h1>Pyoneer</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <a href="/login" class="arrow_btn">ログイン<span><i class="fas fa-arrow-circle-right fa-fw"></i></span></a>
+            </div>
+            <div class="col-md-3">
+                <a href="/select"class="arrow_btn">新規登録<span><i class="fas fa-arrow-circle-right fa-fw"></i></span></a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

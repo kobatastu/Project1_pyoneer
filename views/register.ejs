@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+   <meta charset="UTF-8">
+    <title>Pyoneer</title>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png">
+
+    <!-- ブートストラップ用 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- font awesome用 -->
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+
+
+</head>
+<style>
+    .container{
+    text-align: center;
+    vertical-align: middle;
+    height:100%;
+    
+    
+    }
+
+    .login-header {
+        margin:35% 0% 5% 0%;
+
+
+    }
+    .login-container {
+    background: #ebebeb;
+    padding: 12px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+        -moz-box-shadow: 0 10px 6px -6px #777;
+                box-shadow: 0 10px 6px -6px #777;
+    }
+    input {
+        margin: 10px;
+        width:90%;
+        border-radius: 5px;
+        padding:5px;
+    }
+
+    .arrow_btn {
+        display: inline-block;
+        position: relative;
+        width: 90%;
+        margin:5px;
+        padding:5px;
+
+        text-align: center;
+        text-decoration: none;
+        color: #1B1B1B;
+        background: white;
+        border-radius: 30px;
+        border:1px solid #1B1B1B;
+        transition: transform ease .3s;
+    }
+    .arrow_btn:hover {
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .arrow_btn span {
+        display: inline-block;
+        text-decoration: none;	
+        transition: transform ease .3s;
+    }
+    .arrow_btn:hover span{
+        cursor: pointer;
+        text-decoration: none;
+        transform: translateX(6px);
+    }
+    .ref{
+        margin:5px;
+    }
+    .cp_iptxt{
+        position: relative;
+    }
+    .cp_iptxt:before{
+        content: '\f0e0';  
+        font-weight:900;
+        font-family:"Font Awesome 5 Free";
+        position: relative;
+        left:40px;
+    }
+    .cp_iptxt1{
+        position: relative;
+    }
+    .cp_iptxt1:before{
+        content: '\f023';  
+        font-weight:900;
+        font-family:"Font Awesome 5 Free";
+        position: relative;
+        left:40px;
+    }
+    .cp_iptxt2{
+        position: relative;
+    }
+    .cp_iptxt2:before{
+        content: '\f007';  
+        font-weight:900;
+        font-family:"Font Awesome 5 Free";
+        position: relative;
+        left:40px;
+    }
+
+
+    .cp_iptxt input[type=text] {
+        padding-left: 40px;
+    }
+    .cp_iptxt1 input[type=password] {
+        padding-left: 40px;
+    }
+    .cp_iptxt2 input[type=text] {
+        padding-left: 40px;
+    }
+    h4{
+        font-weight:bold;
+    
+    }
+
+    .error{
+        color: red;
+        text-align: left;
+    }
+    select {
+        margin:10px;
+        width:90%;
+
+    }
+
+    
+</style>
+
+<body>
+
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white">
+        <div class="container">
+            <a href="/index" class="navbar-brand">Pyoneer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+
+<div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h4 class="login-header">『User』として会員登録</h4>
+                    <form action="/register" method="POST" class="login-container">
+  
+                    <p><%-content %></p>
+                
+                    <div class="cp_iptxt2">
+                            <input type="text" name="name" placeholder="お名前" value="<%=form.name %>"> 
+                    </div>               
+                    <div class="cp_iptxt" > 
+                        <input type="text" name="email" placeholder="メールアドレス" value="<%=form.email %>">
+                    </div>
+                    <div class="cp_iptxt1" > 
+                        <input type="password" name="pass" placeholder="パスワード(ハッシュ化されて保存されます)">
+                    </div>
+                    
+                    <button type="submit" class="arrow_btn">新規登録<span><i class="fas fa-arrow-circle-right fa-fw"></i></span></button>
+                    <div class="ref"> ログインは<a href="/login">こちら </a>から </div> <!--ルート選択は全てapp.jsを通過する。そのため/loginとするとうまくいかない-->
+
+             
+            </form>
+            
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

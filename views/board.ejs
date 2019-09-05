@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- ブートストラップ用 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Websocket用 -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://tpm.pw/socket.io/socket.io.js"></script>
+    <title>Pyoneer</title>
+</head>
+<body>
+<style>
+
+.sidebar{
+  top:100px;
+  position: -webkit-sticky;
+  position: sticky;
+}
+.eachmsg{
+    border-top:solid 1px rgb(189, 186, 186);
+   
+    padding:5px;
+
+}
+
+
+</style>
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top" style="background-color: white">
+        <div class="container">
+            <a href="/home" class="navbar-brand">Pyoneer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">How to</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</header>
+    
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="sidebar">
+                <p><a href="/home">ホーム</a></p>
+                <p><a href="/mypage">マイページ</a></p>
+                <p><a href="/chat">チャット</a></p>
+                <p><a href="/logout">ログアウト</a></p>
+            </div>
+        </div>
+    
+        <div class="col-sm-6">
+
+                <p style="margin:50px 0px 50px 0px;font-weight:bold"><big>みんなで雑談しましょう！</big></p>
+
+            <div id="messages" style='height:800px;overflow:scroll;'>
+                <% for(var i=0;i<data.results.length ;i++){%>
+                    <div class="eachmsg">
+                        <div style="font-weight: bold;width:50%;display:inline-block;"><%=data.results[i].name %></div><div style="text-align:right;float:right;width:50%;color:grey"><small><%=data.results[i].date %></small></div>
+                        <p style="padding-top: 10px"><%=data.results[i].msg %> </p>
+                    </div>
+                <%} %>
+            </div>
+
+            <form action=""style="margin:40px">
+                <input id="m" autocomplete="off" style="width:80%"/><button>送信</button>
+            </form>
+        
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+        //サーバーに接続
+        var socket = io.connect("http://*******:8080");
+        var name = '<%= data.name %>'
+ 
+
+        $('form').submit(function(){
+          //サーバーに送るデータを用意
+          var value = {'msg':$('#m').val(),'name':name}
+        
+          //クライアントからサーバーに情報を送信
+          socket.emit('chat message',value);
+          //送信フォームの中身をクリアにする
+          $('#m').val('');
+          return false;
+        });
+
+        //サーバーからメッセージを受け取り、リストに追加
+        socket.on('chat message', function(data){
+        //   $('#messages').append($('<li>').text(data.name+' : '+data.msg+'  '+data.date));
+          $('#messages').append(
+            '<div class="eachmsg"><div style="font-weight: bold;width:50%;display:inline-block;">'+data.name+'</div><div style="text-align:right;float:right;width:50%;color:grey"><small>'+data.date+'</small></div><p style="padding-top: 10px">'+data.msg+'</p></div>'
+          );
+          var obj = document.getElementById("messages");
+          obj.scrollTop = obj.scrollHeight;
+        //   window.scrollTo(0, document.body.scrollHeight);
+         
+        });
+    });
+
+</script>
+
+<footer class="py-4 bg-dark text-light">
+    <div class="container text-center">
+        <ul class="nav justify-content-center mb-3">
+            <li class="nav-item">
+                <a href="/terms" class="nav-link">利用規約</a>
+            </li>
+            <li class="nav-item">
+                <a href="/contact" class="nav-link">お問い合わせ</a>
+            </li>
+            <li class="nav-item">
+                <a href="/withdraw" class="nav-link">退会手続き</a>
+            </li>
+        </ul>
+        <p><small>Copyright &copy;2019 Pyoneer.All Rights Reserved.</small></p>
+    </div>
+</footer>
+
+    
+</body>
+</html>
